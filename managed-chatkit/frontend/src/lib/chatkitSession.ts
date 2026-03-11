@@ -9,6 +9,25 @@ export const workflowId = (() => {
   return id;
 })();
 
+function getOrCreateBrowserUserId(): string {
+  const storageKey = "chatkit_demo_user_id";
+
+  try {
+    const existing = window.localStorage.getItem(storageKey);
+    if (existing) return existing;
+
+    const generated =
+      typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? `web-${crypto.randomUUID()}`
+        : `web-${Math.random().toString(36).slice(2)}-${Date.now()}`;
+
+    window.localStorage.setItem(storageKey, generated);
+    return generated;
+  } catch {
+    return `web-fallback-${Date.now()}`;
+  }
+}
+
 export function createClientSecretFetcher(
   workflow: string,
   endpoint = "/api/create-session"
@@ -18,8 +37,13 @@ export function createClientSecretFetcher(
 
     const response = await fetch(endpoint, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ workflow: { id: workflow } }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        workflow: { id: workflow },
+        user: getOrCreateBrowserUserId(),
+      }),
     });
 
     const payload = (await response.json().catch(() => ({}))) as {
