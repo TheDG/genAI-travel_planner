@@ -8,31 +8,13 @@ export function ChatKitPanel() {
     []
   );
 
-  const { control } = useChatKit({
-    api: {
-      getClientSecret,
-    },
-    composer: {
-      attachments: {
-        enabled: true,
-        uploadStrategy: {
-          type: "hosted",
-        },
-        maxCount: 5,
-        maxSize: 20 * 1024 * 1024,
-        accept: {
-          "application/pdf": [".pdf"],
-          "image/*": [".png", ".jpg", ".jpeg", ".webp"],
-        },
-      },
-    },
+  const chatkit = useChatKit({
+    api: { getClientSecret },
   });
 
   return (
-    <div className="h-[100dvh] w-full bg-slate-100 dark:bg-slate-950">
-      <div className="mx-auto h-full max-w-5xl">
-        <ChatKit control={control} className="h-full" />
-      </div>
+    <div className="flex h-[90vh] w-full rounded-2xl bg-white shadow-sm transition-colors dark:bg-slate-900">
+      <ChatKit control={chatkit.control} className="h-full w-full" />
     </div>
   );
 }
