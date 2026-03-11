@@ -34,6 +34,13 @@ class handler(BaseHTTPRequestHandler):
         payload = {
             "workflow": {"id": WORKFLOW_ID},
             "user": user,
+            "chatkit_configuration": {
+                "file_upload": {
+                    "enabled": True,
+                    "max_files": 5,
+                    "max_file_size": 20
+                }
+            }
         }
 
         req = urllib.request.Request(
