@@ -7,6 +7,7 @@ import urllib.error
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 WORKFLOW_ID = os.environ.get("CHATKIT_WORKFLOW_ID") or os.environ.get("VITE_CHATKIT_WORKFLOW_ID")
 
+
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(200)
@@ -32,7 +33,7 @@ class handler(BaseHTTPRequestHandler):
 
         payload = {
             "workflow": {"id": WORKFLOW_ID},
-            "user": user
+            "user": user,
         }
 
         req = urllib.request.Request(
