@@ -42,6 +42,7 @@ class handler(BaseHTTPRequestHandler):
             headers={
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {OPENAI_API_KEY}",
+                "OpenAI-Beta": "chatkit_beta=v1",
             },
             method="POST",
         )
