@@ -8,7 +8,7 @@ export function ChatKitPanel() {
     []
   );
 
-  const chatkit = useChatKit({
+  const { control } = useChatKit({
     api: {
       getClientSecret,
     },
@@ -29,5 +29,5 @@ export function ChatKitPanel() {
     },
   });
 
-  return <ChatKit {...chatkit} className="h-full w-full" />;
+  return <ChatKit control={control} className="h-full w-full" />;
 }
