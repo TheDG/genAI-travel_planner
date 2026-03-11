@@ -29,7 +29,10 @@ class handler(BaseHTTPRequestHandler):
         except Exception:
             incoming = {}
 
-        user = incoming.get("user", "user-demo")
+        # IMPORTANT:
+        # ChatKit sessions should receive a unique user per end user.
+        # For now we accept it from the frontend fetcher.
+        user = incoming.get("user") or "user-demo"
 
         payload = {
             "workflow": {"id": WORKFLOW_ID},
